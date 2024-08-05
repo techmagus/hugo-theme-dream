@@ -1,26 +1,91 @@
-{{ if or .Site.Params.backgroundDark .Site.Params.backgroundImageDark }}
-<nav class="ui secondary menu dream-menu dream-nav">
-{{ else if .Site.Params.darkNav }}
-<nav class="ui secondary inverted menu dream-menu dream-nav">
+{{ if site.Params.stickyNav }}
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
 {{ else }}
-<nav class="ui secondary menu dream-menu dream-nav">
+<nav class="mt-4 lg:mt-8 py-4">
 {{ end }}
-  {{ if not .Site.Params.disableFlip }}
-  <a class="item dream-flip-toggle" title="{{ i18n "flip" }}">
-    <i class="large link bullseye icon"></i>
-  </a>
-  {{ end }}
-  <a class="item" href="{{ .Site.BaseURL }}" title="{{ i18n "home" }}">
-    <i class="large link home icon"></i>
-  </a>
-  {{ if or .Site.Params.backgroundDark .Site.Params.backgroundImageDark }}
-  <a class="item" onclick="themeSwitch(event)">
-    <i class="large link icon theme-switch"></i>
-  </a>
-  {{ end }}
-  {{ if .Site.Params.enableSearch }}
-  <a class="item" title="{{ i18n "search" }}" onclick="toggleSearch(event)">
-    <i class="large link search icon"></i>
-  </a>
-  {{ end }}
+  <div class="container flex justify-between px-4">
+    <section class="flex items-center gap-4">
+      <div class="avatar cursor-pointer hover:online" @click="flip = !flip" title="{{ T "flip" }}">
+        <div class="h-10 rounded-full">
+          <img src="{{ site.Params.avatar | relURL }}" alt="{{ site.Params.headerTitle }}" />
+        </div>
+      </div>
+
+      {{ if or site.Params.headerTitle site.Params.motto }}
+      <div>
+        {{ if site.Params.headerTitle }}
+        <a href="{{ site.BaseURL }}" class="text-lg font-semibold cursor-pointer">
+          {{ site.Params.headerTitle }}
+        </a>
+        {{ end }}
+        {{ if site.Params.motto }}
+        <div class="text-base-content/60 text-sm">{{ site.Params.motto }}</div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </section>
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-[1] shadow-md">
+        {{ partial "navRightMobile.html" . }}
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      {{ with site.GetPage "/about" }}
+      {{ $aboutPages := .Resources.ByType "page" }}
+      {{ if gt (len $aboutPages) 0 }}
+      <div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="{{ T "about" }}">
+        {{- T "about" -}}
+      </div>
+      {{ end }}
+      {{ end }}
+
+      {{ if gt (len (where site.Pages "Type" "search")) 0 }}
+      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ "search" | relLangURL }}" title="{{ T "search" }}">
+        <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+      </a>
+      {{ end }}
+
+      {{ if site.Params.rss }}
+      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ "index.xml" | relLangURL }}" title="RSS">
+        <ion-icon class="group-hover:text-primary-content" name="logo-rss"></ion-icon>
+      </a>
+      {{ end }}
+
+      {{ if site.Params.collapseNavTaxonomies }}
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-[1] shadow-xl">
+          {{ partial "navVRTTaxonomies.html" . }}
+        </ul>
+      </div>
+      {{ else }}
+      {{ if gt (len (where site.RegularPages "Type" "posts")) 0 }}
+      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ "posts" | relLangURL }}" title="{{ T "archives" }}">
+        <ion-icon class="group-hover:text-primary-content" name="archive"></ion-icon>
+      </a>
+      {{ end }}
+
+      {{ if site.Taxonomies.categories }}
+      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ "categories" | relLangURL }}" title="{{ T "allCategories" }}">
+        <ion-icon class="group-hover:text-primary-content" name="grid"></ion-icon>
+      </a>
+      {{ end }}
+
+      {{ if site.Taxonomies.tags }}
+      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ "tags" | relLangURL }}" title="{{ T "allTags" }}">
+        <ion-icon class="group-hover:text-primary-content" name="pricetags"></ion-icon>
+      </a>
+      {{ end }}
+      {{ end }}
+    </section>
+  </div>
 </nav>

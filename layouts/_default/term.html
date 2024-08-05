@@ -1,0 +1,54 @@
+{{ define "title" }}
+{{- .Title -}}
+{{ end }}
+
+{{ define "main"}}
+
+<div class="flex flex-col md:flex-row gap-4 mt-8 lg:mt-12 px-4">
+  <div class="md:basis-[200px] lg:basis-[300px] prose dark:prose-invert">
+    <h1 class="text-2xl">
+      {{- .Title -}}
+    </h1>
+    <p class="text-sm">
+      {{- T "article" (len .Pages) -}}
+    </p>
+    <div class="flex flex-wrap gap-4 mt-6">
+      {{ $title := .Title }}
+
+      {{ range (index site.Taxonomies .Data.Plural).Alphabetical }}
+      {{ if eq .Page.Title $title }}
+      <span class="badge h-6 badge-primary">
+        {{ .Page.Title }}
+      </span>
+      {{ else }}
+      <a href="{{ .Page.RelPermalink }}" class="badge h-6 no-underline hover:badge-primary">
+        {{ .Page.Title }}
+      </a>
+      {{ end }}
+      {{ end }}
+    </div>
+  </div>
+  <div class="divider divider-vertical md:divider-horizontal"></div>
+  <div class="flex-1 space-y-4">
+    {{ $paginator := .Paginate .Pages }}
+    {{ range $paginator.Pages }}
+    {{ .Render "term-summary" }}
+    {{ end }}
+
+    {{ if gt $paginator.TotalPages 1 }}
+    <div class="flex justify-center pt-8">
+      {{ partial "paginator.html" (dict "paginator" $paginator) }}
+    </div>
+    {{ end }}
+  </div>
+</div>
+
+{{ end }}
+
+{{ define "js" }}
+
+{{ if site.Params.Experimental.jsDate }}
+{{ partial "luxon.html" . }}
+{{ end }}
+
+{{ end }}

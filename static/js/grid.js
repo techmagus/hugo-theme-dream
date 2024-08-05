@@ -1,1 +1,20 @@
-"use strict";$(document).ready(function(){var e;(e=$(".dream-grid").masonry({itemSelector:".dream-column"})).imagesLoaded().progress(function(){return e.masonry("layout")}),window.hasTwitterEmbed&&window.twttr.ready(function(r){return r.events.bind("loaded",function(){return e.masonry("layout")})})});
+"use strict";
+
+function initGrid() {
+  document.querySelectorAll('.dream-grid').forEach(function (grid) {
+    var msnry = new Masonry(grid, {
+      itemSelector: '.dream-column'
+    });
+    imagesLoaded(grid, function () {
+      return msnry.layout();
+    });
+    if (window.hasTwitterEmbed) {
+      window.twttr.ready(function (twttr) {
+        return twttr.events.bind('loaded', function () {
+          return msnry.layout();
+        });
+      });
+    }
+  });
+}
+initGrid();

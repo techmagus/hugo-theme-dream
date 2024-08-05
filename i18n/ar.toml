@@ -28,10 +28,6 @@ other = "{{ .Count }} فئات"
 one = "1 مقال"
 other = "{{ .Count }} مقالات"
 
-[group]
-one = "1 مجموعة"
-other = "{{ .Count }} مجموعات"
-
 [socialLinks]
 other = "روابط وسائل التواصل الاجتماعي"
 
@@ -42,17 +38,11 @@ other = " ست دقائق للقر"
 [updateAt]
 other = "تم التحديث في"
 
-[noTag]
-other = "بدون علامات"
-
 [prevPage]
 other = "الصفحة السابقة"
 
 [nextPage]
 other = "الصفحة التالية"
-
-[saveAsImage]
-other = "حفظ كصورة"
 
 [search]
 other = "يبحث"

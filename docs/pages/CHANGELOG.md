@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+None.
+
+## [3.3.0] - 2024-08-01
+
+### Added
+
+- Support arbitrary taxonomies [#292](https://github.com/g1eny0ung/hugo-theme-dream/pull/292)
+
+### Fixed
+
+- Fix the overflow problem of pre's content
+- Fix an overflow problem when users enable always show scroll bars in the system settings
+- Resources accessibility when deploying site to a subdomain [#295](https://github.com/g1eny0ung/hugo-theme-dream/pull/295)
+
+## [3.2.0] - 2024-07-25
+
+### Added
+
+- Add `showPrevNextPost` param to control the display of previous and next post links in the single post page
+- Add `showTableOfContents` param to control the display of the table of contents in the single post page
+
+## [3.1.1] - 2024-07-23
+
+### Changed
+
+- Adjust shadow style of navbar
+- Now if a paginator has only one page, the previous and next buttons will be hidden
+
+### Fixed
+
+- Correct the usage of semantic elements in `baseof.html` and `single.html`
+
+## [3.1.0] - 2024-07-18
+
+### Added
+
+- Support image optimization for summary images. See [Image Optimization](https://g1en.site/hugo-theme-dream/summary-images#image-optimization) for more details.
+
+### Changed
+
+- Upgrade `imagesloaded` to `5.0.0`
+
+### Fixed
+
+- Fix the problem of misaligned images during initial loading
+
+## [3.0.1] - 2024-07-12
+
+### Fixed
+
+- Add WAI-ARIA roles to some non-semantic elements
+- Fix mobile layout in term.html
+- Add mobile display for nav right section
+
+## [3.0.0] - 2024-07-09
+
+🎉 Hugo Theme Dream 3.0 is released.
+
+See the [migration guide](https://g1en.site/hugo-theme-dream/migrate-to-v3) for more details.
+
 ## [2.0.0-beta.1] - 2021-05-06
 
 ### Added

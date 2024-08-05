@@ -1,0 +1,152 @@
+import { Callout } from 'nextra/components'
+
+# Quick Start
+
+**_I assume you have already read [Hugo Getting Started](https://gohugo.io/getting-started/),
+this can help you to get an overview of Hugo and understand this guide better._**
+
+## Create configuration file
+
+Create `hugo.toml` if it doesn't exist in your site folder.
+
+<Callout type="info">
+You can download and use this [default configuration file](https://github.com/g1eny0ung/hugo-theme-dream/blob/master/hugo.example.toml). It contains all params used in Dream.
+</Callout>
+
+## Set language for your site
+
+Open `hugo.toml` and write:
+
+```toml
+defaultContentLanguage = "en"
+```
+
+View [i18n](./i18n.md) for support languages and more details.
+
+## Website Analytics
+
+Dream support [Google Analytics](https://www.google.com/analytics/) for website analytics.
+
+In `hugo.toml`, set:
+
+```toml
+[services]
+[services.googleAnalytics]
+ID = "..."
+```
+
+<Callout type="warning">
+You may have used `googleAnalytics = "..."` before. This is deprecated in Hugo `0.120.0`.
+
+Please upgrade to the new configuration. See https://gohugo.io/methods/site/googleanalytics/ for more details.
+</Callout>
+
+## Social Comments
+
+Dream can use [Disqus](https://disqus.com/) for social comments.
+
+In `hugo.toml`, set:
+
+```toml
+[services]
+[services.disqus]
+shortname = "..."
+```
+
+<Callout type="warning">
+You may have used `disqusShortname = "..."` before. This is deprecated in Hugo `0.120.0`.
+
+Please upgrade to the new configuration. See https://gohugo.io/methods/site/disqusshortname/ for more details.
+</Callout>
+
+<Callout type="error">
+Currently, Disqus does not support [oklch colors](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch) which is used in Dream.
+We need to make an extra hack to make it work. See [Compatible with oklch colors](./social-comments.md#compatible-with-oklch-colors) for more details.
+</Callout>
+
+For more social comment systems, view [Social Comments](./social-comments.md).
+
+## Add "About Me"
+
+Type below command in your terminal:
+
+```bash
+hugo new about/me.md
+```
+
+Write somethings **about you**:
+
+```md
+---
+title: About Me
+---
+
+Hi, my name is Yue Yang.
+
+This is my blog.
+```
+
+Then create an `index.md` in the `content/about` folder and put below contents into it:
+
+```md
+---
+headless: true
+---
+```
+
+After that, you will see a "About" on the top right navagation bar. Click it to view your about page.
+
+## Write your first article
+
+All of your posts must in the `content/posts` folder.
+
+You can generate it with:
+
+```bash
+hugo new posts/article-title.md
+```
+
+The default content of `article-title.md` is:
+
+```md
+---
+title: {{ replace .TranslationBaseName "-" " " | title }}
+date: {{ .Date }}
+lastmod: {{ .Date }}
+author: Author Name
+# avatar: /img/author.jpg
+# authorlink: https://author.site
+cover: /img/cover.jpg
+# images:
+#   - /img/cover.jpg
+categories:
+  - category1
+tags:
+  - tag1
+  - tag2
+# nolastmod: true
+draft: true
+---
+
+Cut out summary from your post content here.
+
+<!--more-->
+
+The remaining content of your post.
+```
+
+This is the default template of a post.
+
+For a quick start, you can leave the default content as it is. Only remove `draft: true` to publish your post.
+
+For previewing your post, run:
+
+```bash
+hugo server -D
+```
+
+in your blog folder, the `-D` represent to build draft posts.
+
+## End
+
+View more details and configurations on the left sidebar.
